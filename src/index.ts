@@ -3,7 +3,7 @@ import { app } from "./app";
 
 async function main(){
     try{
-        const url = `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DATABASE}`;
+        const url = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`
         console.log(url)
         const conection = await connect(url,  { useNewUrlParser: true, useUnifiedTopology: true } as ConnectOptions);
         console.log('conexao ao banco de dados bem sucedida');
