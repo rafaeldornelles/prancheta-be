@@ -11,4 +11,24 @@ export class UserController {
             next(e)
         }
     }
+
+    static async login(req: Request, res: Response, next:NextFunction) {
+        try {
+            const {email, password} = req.body
+            const tokens = await UserBusiness.login(email, password)
+            res.json(tokens)
+        } catch(e) {
+            next(e)
+        }
+    }
+
+    static async refreshToken(req:Request, res: Response, next: NextFunction) {
+        try {
+            const { refreshToken } = req.body
+            const tokens = await UserBusiness.refreshToken(refreshToken)
+            res.json(tokens)
+        } catch(e) {
+            next(e)
+        }
+    }
 }
