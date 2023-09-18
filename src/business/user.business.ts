@@ -1,7 +1,7 @@
 import { User } from "../model/user.interface";
 import {compare, hash} from "bcrypt"
 import { UserRepository } from "../repository/user.repository";
-import { PranchetaError } from "../util/error.handler";
+import { PranchetaError } from "../middleware/error.handler";
 import { JwtPayload, sign, verify } from "jsonwebtoken";
 import { RefreshTokenRepository } from "../repository/refreshtoken.repository";
 
@@ -28,7 +28,7 @@ export class UserBusiness {
         const payload = verify(refreshToken, process.env.JWT_REFRESH_SECRET!) as JwtPayload
         const storedPayload = await RefreshTokenRepository.findByEmail(payload.email)
         const matched = await compare(refreshToken, storedPayload?.token || "")
-        const valid = (payload.iat! * 1000 + payload.expiresIn) >= Date.now()
+        const valid = (payload.iat! + payload.expiresIn) * 1000 >= Date.now()
 
         if (matched && valid) {
             const user = await UserRepository.findUserByEmail(payload.email)
@@ -41,15 +41,13 @@ export class UserBusiness {
 
     private static async generateTokens(user: User) {
         const token = sign({
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            expiresIn: 28800000 //8*60*60*1000
+            uid: user._id,
+            expiresIn: 28800 //8*60*60
         }, process.env.JWT_SECRET!)
 
         const refreshToken = sign({
-            email: user.email,
-            expiresIn: 86400000
+            uid: user._id,
+            expiresIn: 86400 //24*60*60
         }, process.env.JWT_REFRESH_SECRET!)
         await RefreshTokenRepository.findByEmailAndRemove(user.email)
         const tokenHashed = await hash(refreshToken, 10)
