@@ -1,0 +1,167 @@
+openapi: 3.0.3
+info:
+  title: Prancheta - API 1.0
+  description: |-
+    Documentação da api
+  contact:
+    email: rafafd@hotmail.com
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://prancheta-be.azurewebsites.net/
+  - url: http://localhost:3000/
+tags:
+  - name: user
+    description: User related endpoints
+  - name: project
+    description: Project related endpoints
+  - name: briefing
+    description: Briefing related endpoints
+paths:
+  /user/register:
+    post:
+      tags:
+        - user
+      summary: Register a new user
+      operationId: registerUser
+      requestBody:
+        description: Users to be added
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'  
+  /user/login:
+    post:
+      tags:
+        - user
+      summary: Login
+      operationId: login
+      requestBody:
+        description: login info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Login"
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'  
+  /user/refresh:
+    post:
+      tags:
+        - user
+      summary: refreshes user token
+      description: Refresh user token
+      operationId: refreshUserToken
+      requestBody:
+        description: Refreshes id
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+                  example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NTA4NzAyOGJmYzFhZmQxODhiMWIwNGMiLCJleHBpcmVzSW4iOjg2NDAwLCJpYXQiOjE2OTUxNTA4MjV9.YOBonBSppuatcI2Gvi6HZ5Oe9iR_53H27x8hw5ElMRw
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Token"
+  /project:
+    get:
+      tags:
+        - project
+      summaty: Gets user's projects
+      operationId: getProjects
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Project"
+      security:
+        - api_key: []
+  /project/insert:
+    post:
+      tags:
+        - project
+      summary: insert a new project
+      operationId: insertProject
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: Rafael
+        lastName:
+          type: string
+          example: Dornelles
+        email:
+          type: string
+          example: rafael@email.com
+        password:
+          type: string
+          example: password
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+          example: rafael@email.com
+        password:
+          type: string
+          example: password
+    Token:
+      type: object
+      properties:
+        token:
+          type: string
+        refreshToken:
+          type: string
+    Project:
+      type: object
+      properties:
+        name: 
+          type: string
+          example: meu project
+        user:
+          type: string
+          optional: true
+        createdAt:
+          type: string
+          optional: true
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: authorization
+      in: header
