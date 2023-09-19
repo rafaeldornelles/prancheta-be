@@ -3,6 +3,7 @@ import { userRouter } from "./routes/user.routes"
 import { handleError } from "./middleware/error.handler"
 import { verifyToken } from "./middleware/verify.middleware"
 import { projectRouter } from "./routes/project.routes"
+import { briefingRouter } from "./routes/briefing.routes"
 
 export const app = express()
 
@@ -13,5 +14,6 @@ app.use("/user", userRouter)
 
 app.use(verifyToken)
 app.use("/project", projectRouter)
+app.use("/briefing", briefingRouter)
 
 app.use(handleError)
