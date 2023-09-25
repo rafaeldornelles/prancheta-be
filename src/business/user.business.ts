@@ -17,7 +17,6 @@ export class UserBusiness {
         const errorMessage = "Usuário ou senha incorretos"
         const user = await UserRepository.findUserByEmail(email)
         const auth = await UserAuthRepository.findByUser(user?._id)
-        console.log(user, auth)
         if (user && auth) {
             const matched = await compare(password, auth.password)
             if (matched) {

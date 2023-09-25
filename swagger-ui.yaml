@@ -114,6 +114,15 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Project"
+      requestBody:
+        description: login info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Project"
+      security:
+        - api_key: []
 
 components:
   schemas:
