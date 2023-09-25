@@ -6,6 +6,10 @@ export class UserRepository {
         return userModel.findOne({email: email}).exec()
     }
 
+    static async findUserById(id: string) : Promise<User | null> {
+        return userModel.findById(id).exec()
+    }
+
     static async register(user: User) : Promise<User> {
         return userModel.create(user)
     }
