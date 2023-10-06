@@ -16,9 +16,12 @@ const briefingSchema = new Schema({
             text: {type: String, required: false},
             image: {type: String, required: false},
         },
-        answer: {type: String, required: false}
+        answer: {type: String, required: false},
+        placeholder: {type: String, required: false},
+        trailingText: {type: String, required: false}
     }],
-    answeredAt: {type: Date}
+    answeredAt: {type: Date, required: false},
+    sendedAt: {type: Date, default: Date.now}
 })
 
 export const briefingModel: Model<Briefing> = model<Briefing>("Briefing", briefingSchema, "briefings")

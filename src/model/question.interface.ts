@@ -5,6 +5,8 @@ export interface Question {
     options?: QuestionOption[];
     option_image?: string[];
     answer?: string;
+    placeholder?: String,
+    trailingText?: String
 }
 
 export enum QuestionType {

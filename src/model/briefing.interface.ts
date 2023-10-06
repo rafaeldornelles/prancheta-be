@@ -5,7 +5,8 @@ export interface Briefing {
     sender: User|string,
     client: Client,
     questions: Question[],
-    answeredAt?: Date
+    answeredAt?: Date,
+    sendedAt: Date
 }
 
 export interface Client {

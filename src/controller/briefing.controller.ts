@@ -14,6 +14,7 @@ export class BriefingController {
     static async insert(req: Request, res: Response, next: NextFunction) {
         try {
             const briefing = req.body
+            briefing.sender = res.locals.uid
             const result = await BriefingBusiness.insert(briefing, res.locals.uid)
             return res.json(result)
         } catch (e) {
