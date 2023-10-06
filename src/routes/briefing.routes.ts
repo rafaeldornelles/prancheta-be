@@ -5,4 +5,5 @@ export const briefingRouter = Router()
 
 briefingRouter.post("", BriefingController.insert)
 briefingRouter.get("", BriefingController.listByUser)
+briefingRouter.get("/:id", BriefingController.findById)
 briefingRouter.put("/answer", BriefingController.answer)

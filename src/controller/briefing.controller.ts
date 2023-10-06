@@ -31,4 +31,14 @@ export class BriefingController {
             next(e)
         }
     }
+
+    static async findById(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = req.params.id
+            const result = await BriefingBusiness.findById(id)
+            return res.json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
 }
