@@ -21,7 +21,8 @@ const briefingSchema = new Schema({
         trailingText: {type: String, required: false}
     }],
     answeredAt: {type: Date, required: false},
-    sendedAt: {type: Date, default: Date.now}
+    sendedAt: {type: Date, default: Date.now},
+    project: {type: SchemaTypes.ObjectId, ref: "Project", required: false}
 })
 
 export const briefingModel: Model<Briefing> = model<Briefing>("Briefing", briefingSchema, "briefings")
