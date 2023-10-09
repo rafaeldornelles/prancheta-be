@@ -12,10 +12,10 @@ const briefingSchema = new Schema({
     questions: [{
         questionType: {type: String, enum: ["text", "number", "currency", "yesno", "multiple", "single"], required: true},
         caput: {type: String, required: true},
-        options: {
+        options: [{
             text: {type: String, required: false},
             image: {type: String, required: false},
-        },
+        }],
         answer: {type: String, required: false},
         placeholder: {type: String, required: false},
         trailingText: {type: String, required: false}
