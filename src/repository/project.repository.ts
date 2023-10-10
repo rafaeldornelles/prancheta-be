@@ -9,4 +9,8 @@ export class ProjectRepository {
     static async insert(project: Project) {
         return projectModel.create(project)
     }
+
+    static async findById(id: String) : Promise<Project|null> {
+        return projectModel.findById(id).populate("briefing").populate("user").exec()
+    }
 }

@@ -5,3 +5,4 @@ export const projectRouter = Router()
 
 projectRouter.get("/", ProjectController.listByUser)
 projectRouter.post("/insert", ProjectController.insert)
+projectRouter.get("/:id", ProjectController.findById)

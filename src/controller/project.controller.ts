@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ProjectBusiness } from "../business/project.business";
+import { PranchetaError } from "../middleware/error.handler";
+import { User } from "../model/user.interface";
 
 export class ProjectController {
     static async listByUser(req: Request, res: Response, next: NextFunction) {
@@ -18,6 +20,20 @@ export class ProjectController {
             return res.json(result)
         } catch (e) {
             next(e)
+        }
+    }
+
+    static async findById(req: Request, res: Response, next: NextFunction) {
+        try {
+            const result = await ProjectBusiness.findById(req.params.id)
+            if (!result) {
+                throw new PranchetaError(404, "projeto não encontrado")
+            } else if (res.locals.uid != (result.user as User)._id) {
+                throw new PranchetaError(401, "Não autorizado")
+            }
+            return res.json(result)
+        } catch (e) {
+            next(e)            
         }
     }
 }

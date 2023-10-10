@@ -19,4 +19,8 @@ export class ProjectBusiness {
         await briefing.save()
         return inserted
     }
+
+    static async findById(id: String): Promise<Project|null> {
+        return ProjectRepository.findById(id)
+    }
 }
