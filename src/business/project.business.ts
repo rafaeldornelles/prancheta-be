@@ -9,11 +9,14 @@ export class ProjectBusiness {
         return ProjectRepository.listByUser(uid)
     }
 
-    static async insert(project: Project, userId: string) {
+    static async insert(project: Project, userId: string): Promise<Project> {
         project.user = userId
         const inserted = await ProjectRepository.insert(project)
+        await inserted.populate("briefing")
+        await inserted.populate("user")
         const briefing = inserted.briefing as briefingDocument
-        await BriefingRepository.update(briefing._id, briefing)
+        briefing.project = inserted._id
+        await briefing.save()
         return inserted
     }
 }
