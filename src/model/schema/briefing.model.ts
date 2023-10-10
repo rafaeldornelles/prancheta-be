@@ -1,4 +1,4 @@
-import { model, Model, Schema, SchemaTypes } from "mongoose";
+import { Document, model, Model, Schema, SchemaTypes } from "mongoose";
 import { Briefing } from "../briefing.interface";
 
 export interface briefingDocument extends Briefing, Document{}
