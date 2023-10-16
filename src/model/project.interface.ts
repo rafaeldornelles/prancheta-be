@@ -1,4 +1,5 @@
 import { Briefing } from "./briefing.interface";
+import { ProjectStep } from "./projectStep.interface";
 import { User } from "./user.interface";
 
 export interface Project {
@@ -6,4 +7,5 @@ export interface Project {
     user: User|string,
     createdAt: Date,
     briefing: Briefing|String
+    steps: (String|ProjectStep)[]
 }
