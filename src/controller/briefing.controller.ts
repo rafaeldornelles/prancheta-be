@@ -41,4 +41,23 @@ export class BriefingController {
             next(e)
         }
     }
+
+    static async defaultBriefings(req: Request, res: Response, next: NextFunction) {
+        try {
+            const briefings = await BriefingBusiness.defaultBriefings(res.locals.uid)
+            res.send(briefings)
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    static async setUserDefault(req: Request, res: Response, next: NextFunction) {
+        try {
+            const defaultBriefings = req.body
+            const inserted = await BriefingBusiness.setUserDefault(res.locals.uid, defaultBriefings)
+            res.json(inserted)
+        } catch(e) {
+            next(e)
+        }
+    }
 }

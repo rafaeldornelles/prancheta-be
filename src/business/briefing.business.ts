@@ -1,5 +1,6 @@
 import { PranchetaError } from "../middleware/error.handler";
 import { Briefing } from "../model/briefing.interface";
+import { DefaultBriefing } from "../model/defaultbriefing.interface";
 import { BriefingRepository } from "../repository/briefing.repository";
 
 export class BriefingBusiness {
@@ -28,5 +29,19 @@ export class BriefingBusiness {
         const briefing = await BriefingRepository.findById(briefingId)
         if(! briefing) throw new PranchetaError(404, "briefing não encontrado")
         return briefing
+    }
+
+    static async defaultBriefings(uid: string): Promise<DefaultBriefing[]> {
+        const userDefaultBriefings = await BriefingRepository.userDefaultBriefing(uid)
+        if (userDefaultBriefings) return userDefaultBriefings
+        return BriefingRepository.defaultBriefings()
+    }
+
+    static async setUserDefault(uid: string, dbs: DefaultBriefing[]): Promise<DefaultBriefing[]> {
+        await BriefingRepository.removeDefaults(uid)
+        for (const db of dbs) {
+            db.user = uid
+        }
+        return BriefingRepository.inserDefaults(dbs)
     }
 }
