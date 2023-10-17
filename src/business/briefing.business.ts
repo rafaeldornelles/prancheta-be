@@ -33,7 +33,7 @@ export class BriefingBusiness {
 
     static async defaultBriefings(uid: string): Promise<DefaultBriefing[]> {
         const userDefaultBriefings = await BriefingRepository.userDefaultBriefing(uid)
-        if (userDefaultBriefings) return userDefaultBriefings
+        if (userDefaultBriefings.length) return userDefaultBriefings
         return BriefingRepository.defaultBriefings()
     }
 
