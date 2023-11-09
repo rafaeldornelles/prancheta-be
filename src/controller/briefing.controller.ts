@@ -60,4 +60,14 @@ export class BriefingController {
             next(e)
         }
     }
+
+    static async getClientBriefing(req: Request, res: Response, next: NextFunction) {
+        try {
+            const briefingId = res.locals.briefingId
+            const briefing = await BriefingBusiness.findById(briefingId)
+            res.json(briefing)
+        } catch(e) {
+            next(e)
+        }
+    }
 }

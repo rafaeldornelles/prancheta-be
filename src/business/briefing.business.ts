@@ -1,7 +1,9 @@
 import { PranchetaError } from "../middleware/error.handler";
 import { Briefing } from "../model/briefing.interface";
 import { DefaultBriefing } from "../model/defaultbriefing.interface";
+import { briefingDocument } from "../model/schema/briefing.model";
 import { BriefingRepository } from "../repository/briefing.repository";
+import { EmailBusiness } from "./email.business";
 
 export class BriefingBusiness {
     static async listByUser(userId: string) {
@@ -10,7 +12,9 @@ export class BriefingBusiness {
 
     static async insert(briefing: Briefing, userId: string) {
         briefing.sender = userId
-        return BriefingRepository.insert(briefing)
+        const result = await BriefingRepository.insert(briefing) as briefingDocument
+        await EmailBusiness.sendBriefingEmail(userId, result)
+        return result
     }
 
     static async answer(briefingId: string, answers: string[]){

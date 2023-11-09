@@ -18,7 +18,7 @@ app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerConfig))
 app.use("/user", userRouter)
 
 app.use("/project", verifyToken, projectRouter)
-app.use("/briefing", verifyToken, briefingRouter)
+app.use("/briefing", briefingRouter)
 app.use("/projectstep", verifyToken, projectStepRouter)
 
 app.use(handleError)
