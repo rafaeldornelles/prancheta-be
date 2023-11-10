@@ -36,4 +36,14 @@ export class ProjectController {
             next(e)            
         }
     }
+
+    static async getClientProject(req: Request, res: Response, next: NextFunction) {
+        try {
+            const projectId = res.locals.projectId
+            const project = await ProjectBusiness.findById(projectId)
+            res.json(project)
+        } catch(e) {
+            next(e)
+        }
+    }
 }

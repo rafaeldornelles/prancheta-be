@@ -1,10 +1,10 @@
 import { PranchetaError } from "../middleware/error.handler";
-import { ProjectStep } from "../model/projectStep.interface";
+import { ProjectStep, ProjectStepType } from "../model/projectStep.interface";
 import { projectDocument } from "../model/schema/project.model";
-import { ProjectStepDocument } from "../model/schema/projectStep.model";
 import { User } from "../model/user.interface";
 import { ProjectRepository } from "../repository/project.repository";
 import { ProjectStepRepository } from "../repository/projectstep.repository";
+import { EmailBusiness } from "./email.business";
 
 export class ProjectStepBusiness {
     static async insert(ps: ProjectStep, uid: String): Promise<ProjectStep> {
@@ -13,6 +13,12 @@ export class ProjectStepBusiness {
             const inserted = await ProjectStepRepository.insert(ps)
             project.steps = project.steps.concat(inserted)
             project.save()
+
+            if (inserted.type == ProjectStepType.VISITATION) {
+                EmailBusiness.sendProjectVisitationEmail(project)
+            } else if (inserted.type == ProjectStepType.FEEDBACK_REQUEST) {
+                EmailBusiness.sendFeedbackRequestEmail(project)
+            }
             return inserted
         } else {
             throw new PranchetaError(404, "Projeto não encontrado")

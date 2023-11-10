@@ -13,7 +13,7 @@ export class BriefingBusiness {
     static async insert(briefing: Briefing, userId: string) {
         briefing.sender = userId
         const result = await BriefingRepository.insert(briefing) as briefingDocument
-        await EmailBusiness.sendBriefingEmail(userId, result)
+        await EmailBusiness.sendBriefingEmail(result)
         return result
     }
 
