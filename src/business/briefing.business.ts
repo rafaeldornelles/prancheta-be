@@ -29,8 +29,8 @@ export class BriefingBusiness {
         throw new PranchetaError(400, "Parâmetros inválidos")
     }
 
-    static async findById(briefingId: string) : Promise<Briefing> {
-        const briefing = await BriefingRepository.findById(briefingId)
+    static async findById(briefingId: string, populateSender = false) : Promise<Briefing> {
+        const briefing = await BriefingRepository.findById(briefingId, populateSender)
         if(! briefing) throw new PranchetaError(404, "briefing não encontrado")
         return briefing
     }

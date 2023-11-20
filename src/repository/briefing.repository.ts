@@ -12,8 +12,12 @@ export class BriefingRepository {
         return briefingModel.create(briefing)
     }
 
-    static async findById(id: string) : Promise<Briefing|null> {
-        return briefingModel.findById(id).exec()
+    static async findById(id: string, populateSender = false) : Promise<Briefing|null> {
+        const result = briefingModel.findById(id)
+        if (populateSender) {
+            result.populate("sender")
+        }
+        return result.exec()
     }
 
     static async update(id: string, briefing: Briefing): Promise<Briefing|null> {
