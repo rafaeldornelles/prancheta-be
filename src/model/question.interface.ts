@@ -11,7 +11,10 @@ export interface Question {
 export enum QuestionType {
     TEXT = "text",
     MULTIPLE_OPTIONS = "multiple",
-    SINGLE_OPTION = "single"
+    SINGLE_OPTION = "single",
+    CURRENCY = "currency",
+    YESNO = "yesno",
+    NUMBER = "number"
 }
 
 export interface QuestionOption {
