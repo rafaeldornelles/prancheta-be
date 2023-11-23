@@ -24,4 +24,11 @@ export class ProjectStepBusiness {
             throw new PranchetaError(404, "Projeto não encontrado")
         }
     }
+    static async insertClient(ps: ProjectStep): Promise<ProjectStep> {
+        const project = await ProjectRepository.findById(ps.project as String) as projectDocument
+        const inserted = await ProjectStepRepository.insert(ps)
+        project.steps = project.steps.concat(inserted)
+        project.save()
+        return inserted
+    }
 }

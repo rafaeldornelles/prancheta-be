@@ -11,4 +11,15 @@ export class ProjectStepController {
             next(e)
         }
     }
+
+    static async answerFeedback(req: Request, res: Response, next: NextFunction) {
+        try {
+            const projectStep = req.body
+            projectStep.project = res.locals.projectId
+            const inserted = await ProjectStepBusiness.insert(projectStep, res.locals.uid)
+            return res.json(inserted)
+        } catch (e) {
+            next(e)
+        }
+    }
 }

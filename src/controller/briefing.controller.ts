@@ -32,6 +32,17 @@ export class BriefingController {
         }
     }
 
+    static async answerClient(req: Request, res: Response, next: NextFunction) {
+        try {
+            const briefing = res.locals.briefingId
+            const answers = req.body.answers
+            const result = await BriefingBusiness.answer(briefing, answers)
+            return res.json(result)
+        } catch (e) {
+            next(e)
+        }
+    }
+
     static async findById(req: Request, res: Response, next: NextFunction) {
         try {
             const id = req.params.id

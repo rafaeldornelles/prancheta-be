@@ -22,6 +22,6 @@ app.use("/user", userRouter)
 
 app.use("/project", projectRouter)
 app.use("/briefing", briefingRouter)
-app.use("/projectstep", verifyToken, projectStepRouter)
+app.use("/projectstep", projectStepRouter)
 
 app.use(handleError)

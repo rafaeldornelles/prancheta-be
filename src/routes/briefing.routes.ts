@@ -10,5 +10,5 @@ briefingRouter.get("/defaults", verifyToken, BriefingController.defaultBriefings
 briefingRouter.get("/client", verifyClientToken, BriefingController.getClientBriefing)
 briefingRouter.get("/:id", verifyToken, BriefingController.findById)
 briefingRouter.put("/answer", verifyToken, BriefingController.answer)
-briefingRouter.put("/client/answer", verifyClientToken, BriefingController.answer)
+briefingRouter.put("/client/answer", verifyClientToken, BriefingController.answerClient)
 briefingRouter.post("/defaults", verifyToken, BriefingController.setUserDefault)
