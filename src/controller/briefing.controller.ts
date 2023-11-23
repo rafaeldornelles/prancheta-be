@@ -64,7 +64,7 @@ export class BriefingController {
     static async getClientBriefing(req: Request, res: Response, next: NextFunction) {
         try {
             const briefingId = res.locals.briefingId
-            const briefing = await BriefingBusiness.findById(briefingId, true)
+            const briefing = await BriefingBusiness.findUserBriefing(briefingId, true)
             res.json(briefing)
         } catch(e) {
             next(e)
