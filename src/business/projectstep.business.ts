@@ -24,9 +24,13 @@ export class ProjectStepBusiness {
             throw new PranchetaError(404, "Projeto não encontrado")
         }
     }
+
+
     static async insertClient(ps: ProjectStep): Promise<ProjectStep> {
         const project = await ProjectRepository.findById(ps.project as String) as projectDocument
         const inserted = await ProjectStepRepository.insert(ps)
+        const steps = project.steps as ProjectStep[]
+        if(!steps.some(ps => ps.type == ProjectStepType.FEEDBACK_REQUEST) || steps.some(ps => ps.type == ProjectStepType.FEEDBACK_RESPONSE)) throw new PranchetaError(400, "Feedback não solicitado ou já respondido.")
         project.steps = project.steps.concat(inserted)
         project.save()
         return inserted

@@ -14,7 +14,7 @@ const YAML = require("yamljs")
 const swaggerConfig = YAML.load("swagger-ui.yaml")
 
 app.use(cors())
-app.use(express.json())
+app.use(express.json({limit: "50Mb"}))
 app.use(express.urlencoded({ extended: true}))
 
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerConfig))

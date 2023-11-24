@@ -51,7 +51,7 @@ export class BriefingBusiness {
 
     static async findUserBriefing(briefingId: string, populateSender: boolean) {
         const briefing = await this.findById(briefingId, populateSender)
-        // if(briefing?.questions.some(q => !!q.answer)) throw new PranchetaError(400, "Briefing já respondido") //todo: descomentar
+        if(briefing?.questions.some(q => !!q.answer)) throw new PranchetaError(400, "Briefing já respondido")
         return briefing
     }
 }

@@ -16,7 +16,7 @@ export class ProjectStepController {
         try {
             const projectStep = req.body
             projectStep.project = res.locals.projectId
-            const inserted = await ProjectStepBusiness.insert(projectStep, res.locals.uid)
+            const inserted = await ProjectStepBusiness.insertClient(projectStep)
             return res.json(inserted)
         } catch (e) {
             next(e)
