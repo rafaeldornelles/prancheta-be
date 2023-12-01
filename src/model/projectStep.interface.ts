@@ -1,9 +1,9 @@
 import { Project } from "./project.interface"
 
 export interface ProjectStep {
-    text: String
+    text: string
     date: Date
-    imgs?: String[]
+    imgs?: string[]
     type: ProjectStepType
     project: Project|String
 }

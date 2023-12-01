@@ -6,7 +6,7 @@ export interface ProjectStepDocument extends ProjectStep, Document{}
 const projectStepSchema = new Schema({
     text: {type: String, required: true},
     date: {type: Date, default: Date.now},
-    imgs: [{type: String, required: false}],
+    imgs: [{type: SchemaTypes.ObjectId, ref: "ProjectStepImage"}],
     type: {type: String, enum: ["visitation", "feedbackrequest", "feedbackresponse"], required: true},
     project: {type: SchemaTypes.ObjectId, ref:"Project"}
 })

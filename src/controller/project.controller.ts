@@ -46,4 +46,20 @@ export class ProjectController {
             next(e)
         }
     }
+
+    static async getImg(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = req.params.id
+            const image = await ProjectBusiness.getImg(id)
+            var img = Buffer.from(image, 'base64');
+
+            res.writeHead(200, {
+              'Content-Type': 'image/jpeg',
+              'Content-Length': img.length
+            });
+            res.end(img);
+        } catch(e) {
+            next(e)
+        }
+    }
 }
